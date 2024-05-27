@@ -7,7 +7,7 @@ function CountryList({ cities, isLoading }) {
   if (isLoading) return <Spinner />;
   if (!cities.length)
     return (
-      <Message message="Add ypur first item by clicking on a city on the map" />
+      <Message message="Add your first item by clicking on a city on the map" />
     );
 
   // Filtering out unique countries from the cities array
