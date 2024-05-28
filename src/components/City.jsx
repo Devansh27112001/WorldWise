@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import styles from "./City.module.css";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useCities } from "../context/CitiesContext";
 import Spinner from "./Spinner";
 import BackButton from "./BackButton";
@@ -26,24 +26,26 @@ function City() {
   // This id is coming from the URL. Where we click on a particular city, we get redirected to a City component here where we get the id from the URL that is a global state and we use that id to get the details about the city using the getCity method in CitiesContext which is passed using a context provider.
   const { id } = useParams();
   const { currentCity, getCity, isLoading } = useCities();
+  const [cityLoading, setCityLoading] = useState(false);
 
   useEffect(
     function () {
       getCity(id);
+      setCityLoading(true);
     },
     [id]
   );
 
   const { emoji, cityName, date, notes } = currentCity;
 
-  if (isLoading) return <Spinner />;
+  if (isLoading || !cityLoading) return <Spinner />;
 
   return (
     <div className={styles.city}>
       <div className={styles.row}>
         <h6>City name</h6>
         <h3>
-          <span>{flagemojiToPNG(emoji)}</span> {cityName}
+          <span>{emoji}</span> {cityName}
         </h3>
       </div>
 
