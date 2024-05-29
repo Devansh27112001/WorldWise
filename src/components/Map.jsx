@@ -10,22 +10,20 @@ import {
 } from "react-leaflet";
 import { useEffect, useState } from "react";
 import { useCities, emojiToFlag } from "../context/CitiesContext";
-import { map } from "leaflet";
 import { useGeolocation } from "../hooks/useGeolocation";
 import Button from "./Button";
+import { useUrlPosition } from "../hooks/useUrlPosition";
 
 function Map() {
   const { cities } = useCities();
   const [mapPosition, setMapPosition] = useState([51.505, -0.09]);
-  const [searchParams] = useSearchParams();
   const {
     isLoading: isLoadingPosition,
     position: geolocationPosition,
     getPosition,
   } = useGeolocation();
-  const mapLat = searchParams.get("lat");
-  const mapLng = searchParams.get("lng");
 
+  const [mapLat, mapLng] = useUrlPosition();
   useEffect(
     function () {
       if (mapLat && mapLng) setMapPosition([mapLat, mapLng]);
@@ -76,6 +74,7 @@ function Map() {
   );
 }
 
+// This function reacts to the changes in the mapLat and mapLng in a way which changes the mapPosition state and to react to that state we have to write custom component that uses the useMap() hook of the leaflet library which tells the Map to change the current center i.e to mapPosition
 function ChangeComponent({ position }) {
   const map = useMap();
   map.setView(position);

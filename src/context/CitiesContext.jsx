@@ -52,8 +52,8 @@ function useCities() {
   return context;
 }
 
-const emojiToFlag = (emoji) => {
-  var countryCode = Array.from(emoji, (codeUnit) => codeUnit.codePointAt())
+const emojiToFlag = (flag) => {
+  var countryCode = Array.from(flag, (codeUnit) => codeUnit.codePointAt())
     .map((char) => String.fromCharCode(char - 127397).toLowerCase())
     .join("");
   return (

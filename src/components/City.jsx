@@ -28,6 +28,7 @@ function City() {
   const { currentCity, getCity, isLoading } = useCities();
   const [cityLoading, setCityLoading] = useState(false);
 
+  // This will set the currentCity state to the city we get from getCity(id)
   useEffect(
     function () {
       getCity(id);
@@ -45,7 +46,7 @@ function City() {
       <div className={styles.row}>
         <h6>City name</h6>
         <h3>
-          <span>{emoji}</span> {cityName}
+          <span>{flagemojiToPNG(emoji)}</span> {cityName}
         </h3>
       </div>
 
