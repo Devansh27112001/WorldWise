@@ -29,12 +29,14 @@ function City() {
   const [cityLoading, setCityLoading] = useState(false);
 
   // This will set the currentCity state to the city we get from getCity(id)
+  // The getCity(id) function lives in our CitiesContext file. If we include this in our depenedency array, then this will execute the useEffect() infinitely as getCity() function updates a state variable in our CitiesContext which will cause the <Provider> component to re-render and so a new getCity() function will be created which is not same as the previous one as functions are objects and {} !== {}. So we will have to memoize the getCity(id) function in the CitiesContext and then add it as a dependency to our useEffect()
+
   useEffect(
     function () {
       getCity(id);
       setCityLoading(true);
     },
-    [id]
+    [id, getCity]
   );
 
   const { emoji, cityName, date, notes } = currentCity;
